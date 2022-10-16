@@ -1,22 +1,20 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar color="success">
-    <ion-title>
-      TeLlevoApp
-    </ion-title>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+    <ion-title>Error</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
   </ion-toolbar>
-  
 </ion-header>
 
-<ion-content >
-
+<ion-content>
   <ion-menu side="start"  menuId="first" contentId="main">
     
     <ion-content>
-      <div class="menu-header-bg">  <img src="https://images4.alphacoders.com/360/36074.jpg" alt="">
-      </div>
+      <div class="menu-header-bg"></div>
         <div class="header-content">
           <img src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg" alt="">
           <ion-label>
@@ -57,28 +55,12 @@
     </ion-menu>
     <ion-router-outlet id="main"></ion-router-outlet>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Bienvenido(a) invitado</ion-card-title>
-    </ion-card-header>
-  
-    <ion-card-content>
-      <img src="https://acnews.blob.core.windows.net/imgnews/large/NAZ_69b4e949270342c78994880bfa904685.jpg" alt="">
+    <ion-card>
       
-      <h1>Bienvenido a TeLlevoApp</h1>
-      
-      <ion-button shape="round" fill="outline" expand="full" (click)="registro()">Registro <ion-icon name="person-add-outline"></ion-icon> </ion-button>
-      <p>Si ya eres usuario</p>
-      <ion-button shape="round" fill="outline" expand="full" (click)="login()"> Inicio de sesión <ion-icon name ="log-in-outline"></ion-icon> </ion-button>
+    
+      <ion-card-content>
+        <img src="https://img.freepik.com/vector-gratis/ups-error-404-ilustracion-concepto-robot-roto_114360-5529.jpg?w=2000" alt="">
 
-    </ion-card-content>
-  </ion-card>
-  
+      </ion-card-content>
+    </ion-card>
 </ion-content>
-
-<ion-footer>
-  <ion-toolbar color="success">
-    <ion-title></ion-title>
-   
-  </ion-toolbar>
-</ion-footer>
