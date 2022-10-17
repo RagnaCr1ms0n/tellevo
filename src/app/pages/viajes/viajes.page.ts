@@ -75,6 +75,11 @@ export class ViajesPage implements OnInit {
     this.router.navigate(['perfiles'])
   }
 
+  api(){
+    console.log("api")
+    this.router.navigate(['api'])
+  }
+
   conductor(){
     console.log("conductor")
     this.router.navigate(['conductor'])

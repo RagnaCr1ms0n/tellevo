@@ -42,6 +42,10 @@ export class ConductorPage implements OnInit {
     this.router.navigate(['home'])
   }
  
+  api(){
+    console.log("api")
+    this.router.navigate(['api'])
+  }
 
   info(){
     console.log("info")
