@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import * as firebase from 'firebase/compat';
 import { Cliente } from 'src/app/services/cliente';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { HomeService } from 'src/app/services/home.service';
@@ -16,12 +18,14 @@ export class LoginPage implements OnInit{
 
 
  
-  cliente: Cliente
+  user = null;
   mensaje: string
 
-  constructor(private fire: FirebaseService ,private servicio: HomeService, private router: Router, private route: ActivatedRoute,  private alerta: AlertController ) { 
+  constructor(private fire: FirebaseService ,private servicio: HomeService, private router: Router, private route: ActivatedRoute,  private alerta: AlertController, private auth: AngularFireAuth ) { 
     
-
+ this.auth.authState.subscribe((user) =>{
+  this.user = user? user: null;
+ });
    
 
   }
@@ -60,7 +64,14 @@ export class LoginPage implements OnInit{
  }
 
 
+  google(){
+ const user = this.fire.googleSignIn();
 
+}
+
+github(){
+  const user = this.fire.github();
+}
 
 info(){
   console.log("info")
@@ -71,5 +82,7 @@ fail(){
   console.log("error")
   this.router.navigate(['error'])
 }
+
+
 
 }

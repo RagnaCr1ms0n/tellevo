@@ -17,7 +17,7 @@
     <ion-content> 
       <div class="menu-header-bg"></div>
         <div class="header-content">
-          <img src="https://pa1.narvii.com/6980/b9edd84f85106c219fa6dccf612cbab9ec6e84d5r1-540-457_hq.gif" alt="">
+          <img src="https://www.motorpoint.com/fotos/8/toreto1_thumb_730.jpg" alt="">
           <ion-label>
             <h2>{{ usuario }}</h2>
             <p>inutil</p>
@@ -55,7 +55,7 @@
 
 
 <ion-list>
-  <ion-item *ngFor="let aux of viajes" [routerLink]="['/viajes', aux.id]" >
+  <ion-item *ngFor="let aux of viajes" >
       <ion-card>
         <ion-card-header>
           <ion-card-title>Viaje </ion-card-title>
@@ -90,7 +90,10 @@
         </ion-card-content>
         
         <ion-button color="success"><ion-icon slot="start" name="add-circle-outline" ></ion-icon>Entrar como pasajero</ion-button> 
-        <ion-button color="danger"><ion-icon slot="end" name="skull-outline" (click)="eliminar()"></ion-icon>Eliminar</ion-button>
+        <ion-button color="danger" (click)="eliminar(aux.id)" >
+          eliminar
+  <ion-icon name="warning-outline" style="margin-left:10px ;"></ion-icon>
+        </ion-button>
       </ion-card>
 
      </ion-item>

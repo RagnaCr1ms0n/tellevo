@@ -3,7 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Usuario } from './usuario';
-
+import { GoogleAuthProvider, GithubAuthProvider, signInWithPopup, getAuth } from "firebase/auth"
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ import { Usuario } from './usuario';
 })
 export class FirebaseService {
 
-  constructor(private auth: AngularFireAuth ,private database: AngularFirestore, private loading: LoadingController, private toastController: ToastController) { }
+  constructor(private afAuth: AngularFireAuth ,private database: AngularFirestore, private loading: LoadingController, private toastController: ToastController, private router: Router) { }
 
 createDoc(data: any, path: string, id: string) {
   const collection = this.database.collection(path);
@@ -67,38 +68,62 @@ async cerrarLoading() {
 
 
 async logout(){
-  await this.auth.signOut();
+  await this.afAuth.signOut();
 
 }
 
 async login(correo: string, pass: string){
-  const { user } = await this.auth.signInWithEmailAndPassword(correo, pass)
+  const { user } = await this.afAuth.signInWithEmailAndPassword(correo, pass)
   await this.verificacion();
   return user;
 }
 
 async verificacion(){
-  return (await this.auth.currentUser).sendEmailVerification();
+  return (await this.afAuth.currentUser).sendEmailVerification();
 
 }
 
 async recuperar(correo: string){
-  return this.auth.sendPasswordResetEmail(correo);
+  return this.afAuth.sendPasswordResetEmail(correo);
 }
 
 async registrar(correo: string, pass: string){
-  const { user } = await this.auth.createUserWithEmailAndPassword(correo, pass)
+  const { user } = await this.afAuth.createUserWithEmailAndPassword(correo, pass)
   return user;
 
 }
 
 async obtenerUsuario(){
-  const aux: Usuario = await this.auth.currentUser;
+  const aux: Usuario = await this.afAuth.currentUser;
   return aux;
 }
 
 async obtenerEmail(){
-  return ( await this.auth.currentUser).email;
+  return ( await this.afAuth.currentUser).email;
 }
+
+
+async googleSignIn(){
+  return this.afAuth.signInWithPopup(new GoogleAuthProvider).then(res =>{
+    this.router.navigate(['viajes'])
+    localStorage.setItem('token',JSON.stringify(res.user?.uid));
+  },err =>{
+    alert(err.message);
+  })
+ 
+}
+
+async github(){
+  return this.afAuth.signInWithPopup(new GithubAuthProvider).then(res =>{
+    this.router.navigate(['viajes'])
+    localStorage.setItem('token',JSON.stringify(res.user?.uid))
+  },err =>{
+      alert(err.message);
+    })
+}
+
+
+
+
 
 }

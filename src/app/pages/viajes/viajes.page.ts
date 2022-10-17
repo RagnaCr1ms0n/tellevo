@@ -153,9 +153,33 @@ export class ViajesPage implements OnInit {
     await alert.present();
   }
 
- async eliminar(){
-  console.log("eliminar")
- }
+ async eliminar(id: string) {
 
+    const alert = await this.alerta.create({
+      header: 'eliminar',
+      message: 'Estas seguro que deseas eliminar esta asignatura?',
+      buttons: [{
+        text: 'cancelar',
+        role: 'canel',
+      },
+      {
+        text: 'Eliminar',
+        handler: () => {
+          this.fire.deleteDoc('viajes', id)
+          this.router.navigate(['/viajes'])
+
+        }
+      }
+      ]
+
+    });
+
+    await alert.present();
+
+
+
+
+
+ }
 
 }
