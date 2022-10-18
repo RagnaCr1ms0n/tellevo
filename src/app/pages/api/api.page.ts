@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { PostServiceProvider } from 'src/app/services/post-services.service';
+import { HttpClient } from '@angular/common/http'
 
 
 @Component({
@@ -10,24 +11,20 @@ import { PostServiceProvider } from 'src/app/services/post-services.service';
 })
 export class ApiPage implements OnInit {
 
-  constructor(private nav: NavController, private post: PostServiceProvider) { }
+  constructor(private nav: NavController, private post: PostServiceProvider, private http: HttpClient) { }
 
-  arrayPosts:any;
+  usuarios = []
 
   ngOnInit() {
-    this.getPosts();
-  }
-  ionViewLoad() {
-    this.getPosts();//Llamamos a la función getPost cuando la vista se cargue
+    this.http.get<any>('https://radiant-sierra-97298.herokuapp.com/api/usuarios')
+    .subscribe(res => { 
+      console.log(res);
+      this.usuarios = res.data;
+    })
   }
 
-  getPosts() { //llamamos a la funcion getPost de nuestro servicio.
-    this.post.getPosts()
-    .then(data => {
-      this.arrayPosts = data;
-    });
-  }
 
 }
+
 
 

@@ -15,24 +15,30 @@ export class ViajesPage implements OnInit {
   viajes = []
   titulo = "Viajes"
   viaje : Viajes
-  usuario : any
+  usuario : any; 
 
 
   constructor(private router: Router, private fire: FirebaseService, private servicio: ViajesService, private alerta: AlertController) { }
 
   ngOnInit() {
+    this.obtenerViajes()
     this.validacion()
   }
 
   ionViewWillEnter(){
+    this.obtenerViajes()
     this.validacion()
   }
 
   validacion(){
     this.fire.obtenerUsuario().then(
       (res) =>{
-        this.obtenerViajes();
-        this.usuario = res.email;
+        if(res.emailVerified) {
+          this.obtenerViajes();
+          this.usuario = res.email;
+        } else {
+          this.mensajeError();
+        }
       },
       (err) =>{
 
@@ -40,6 +46,20 @@ export class ViajesPage implements OnInit {
     )
   }
 
+  async mensajeError() {
+    const alert = await this.alerta.create({
+      header: 'Error',
+      message: 'Debe validar el correo',
+      buttons: [
+        {
+          text: 'Cerrar',
+          handler: () => {
+            this.router.navigate(['/login'])
+          },
+        },
+      ],
+    });
+  }
 
   logout(){
     this.fire.logout();

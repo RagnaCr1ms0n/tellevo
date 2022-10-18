@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class FirebaseService {
 
-  constructor(private afAuth: AngularFireAuth ,private database: AngularFirestore, private loading: LoadingController, private toastController: ToastController, private router: Router) { }
+  constructor(private auth: AngularFireAuth ,private database: AngularFirestore, private loading: LoadingController, private toastController: ToastController, private router: Router) { }
 
 createDoc(data: any, path: string, id: string) {
   const collection = this.database.collection(path);
@@ -68,43 +68,44 @@ async cerrarLoading() {
 
 
 async logout(){
-  await this.afAuth.signOut();
+  await this.auth.signOut();
 
 }
 
 async login(correo: string, pass: string){
-  const { user } = await this.afAuth.signInWithEmailAndPassword(correo, pass)
+  const { user } = await this.auth.signInWithEmailAndPassword(correo, pass)
   await this.verificacion();
-  return user;
+  return user;  
 }
 
 async verificacion(){
-  return (await this.afAuth.currentUser).sendEmailVerification();
+  return (await this.auth.currentUser).sendEmailVerification();
 
 }
 
 async recuperar(correo: string){
-  return this.afAuth.sendPasswordResetEmail(correo);
+  return this.auth.sendPasswordResetEmail(correo);
 }
 
 async registrar(correo: string, pass: string){
-  const { user } = await this.afAuth.createUserWithEmailAndPassword(correo, pass)
+  const { user } = await this.auth.createUserWithEmailAndPassword(correo, pass)
+  await this.verificacion();
   return user;
 
 }
 
 async obtenerUsuario(){
-  const aux: Usuario = await this.afAuth.currentUser;
+  const aux: Usuario = await this.auth.currentUser;
   return aux;
 }
 
 async obtenerEmail(){
-  return ( await this.afAuth.currentUser).email;
+  return (await this.auth.currentUser).email;
 }
 
 
 async googleSignIn(){
-  return this.afAuth.signInWithPopup(new GoogleAuthProvider).then(res =>{
+  return this.auth.signInWithPopup(new GoogleAuthProvider).then(res =>{
     this.router.navigate(['viajes'])
     localStorage.setItem('token',JSON.stringify(res.user?.uid));
   },err =>{
@@ -114,7 +115,7 @@ async googleSignIn(){
 }
 
 async github(){
-  return this.afAuth.signInWithPopup(new GithubAuthProvider).then(res =>{
+  return this.auth.signInWithPopup(new GithubAuthProvider).then(res =>{
     this.router.navigate(['viajes'])
     localStorage.setItem('token',JSON.stringify(res.user?.uid))
   },err =>{

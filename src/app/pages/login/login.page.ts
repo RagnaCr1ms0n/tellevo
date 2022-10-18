@@ -27,8 +27,9 @@ export class LoginPage implements OnInit{
   this.user = user? user: null;
  });
    
+ 
 
-  }
+  } 
 
   ngOnInit() {
   }
@@ -44,7 +45,7 @@ export class LoginPage implements OnInit{
       this.router.navigate(['/viajes'])
     } else {
       console.log("papure")
-      const uwu = await this.alerta.create({
+      const uwu = await this.alerta.create({    
         header: 'Error',
         subHeader: 'Credenciales incorrectas',
         message: 'Por favor verifique que los datos ingresados sean correctos',
@@ -64,8 +65,8 @@ export class LoginPage implements OnInit{
  }
 
 
-  google(){
- const user = this.fire.googleSignIn();
+google(){
+  const user = this.fire.googleSignIn();
 
 }
 
